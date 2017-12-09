@@ -45,6 +45,7 @@ module.exports = (event) => {
     const apiaiSession = apiAiClient.textRequest(message, {sessionId: 'facebook-chat-bot-ex'});
 
     apiaiSession.on('response', (response) => {
+        console.log(response);
         var aiText = response.result.fulfillment.speech;
         if (response.result.metadata.intentName === 'players') {
             callApiSendMessage(senderId, "You are asking for player info?");
