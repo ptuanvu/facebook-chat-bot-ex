@@ -22,7 +22,7 @@ const
   express = require('express'),
   body_parser = require('body-parser'),
   app = express().use(body_parser.json()), // creates express http server
-  processMessages = require('../helpers/processMessages');
+  processMessages = require('helpers/processMessages');
 
 const PAGE_ACCESS_TOKEN = "EAAZA7ZC1ZBadngBAEyMdasXSb2fwDFDqpDMwSGUsoaRU9ifYA0PCUV0MQUef4U42MJeVodKrjZAZB3CHJ0rXmfVYmLZCxZAxiUUs3mzTLTAuZCVSY8VZBYdX7zGjjlPGmy3I6mvFhegYZBatfTMZCB9OiatUYwQcu9LZBZAlZAy0agzmZCswJ2PktdZAsbpZC";
 // Sets server port and logs message on success
@@ -145,7 +145,7 @@ app.post('/webhook', (req, res) => {
       // Check if the event is a message or postback and
       // pass the event to the appropriate handler function
       if (webhook_event.message) {
-        processMessages(sender_psid, webhook_event.message);
+        processMessages(webhook_event);
       } else if (webhook_event.postback) {
         handlePostback(sender_psid, webhook_event.postback);
       }
