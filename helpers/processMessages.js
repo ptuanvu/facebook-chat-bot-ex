@@ -5,28 +5,37 @@ const request = require('request');
 
 const apiAiClient = require('apiai')(API_AI_TOKEN);
 
-const callApiSendMessage = (senderId, response) => {
-    console.log(response);
-    var request_body = {
-    "recipient": {
-      "id": senderId
-    },
-    "message": response
-  }
+const callApiSendMessage = (senderId, text) => {
+    console.log(text);
+//     var request_body = {
+//     "recipient": {
+//       "id": senderId
+//     },
+//     "message": response
+//   }
 
-  // Send the HTTP request to the Messenger Platform
-  request({
-    "uri": "https://graph.facebook.com/v2.6/me/messages",
-    "qs": { "access_token": FACEBOOK_ACCESS_TOKEN },
-    "method": "POST",
-    "json": request_body
-  }, (err, res, body) => {
-    if (!err) {
-      console.log('message sent!')
-    } else {
-      console.error("Unable to send message:" + err);
-    }
-  });
+//   // Send the HTTP request to the Messenger Platform
+//   request({
+//     "uri": "https://graph.facebook.com/v2.6/me/messages",
+//     "qs": { "access_token": FACEBOOK_ACCESS_TOKEN },
+//     "method": "POST",
+//     "json": request_body
+//   }, (err, res, body) => {
+//     if (!err) {
+//       console.log('message sent!')
+//     } else {
+//       console.error("Unable to send message:" + err);
+//     }
+//   });
+    request({
+            url: 'https://graph.facebook.com/v2.6/me/messages',
+            qs: { access_token: FACEBOOK_ACCESS_TOKEN },
+            method: 'POST',
+            json: {
+                recipient: { id: senderId },
+                message: { text },
+            }
+        });
 };
 
 module.exports = (event) => {
