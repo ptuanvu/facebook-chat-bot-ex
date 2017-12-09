@@ -6,6 +6,7 @@ const request = require('request');
 const apiAiClient = require('apiai')(API_AI_TOKEN);
 
 const sendTextMessage = (senderId, response) => {
+    console.log(response);
     var request_body = {
     "recipient": {
       "id": senderId
