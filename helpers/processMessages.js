@@ -5,16 +5,27 @@ const request = require('request');
 
 const apiAiClient = require('apiai')(API_AI_TOKEN);
 
-const sendTextMessage = (senderId, attachment) => {
-    request({
-        url: 'https://graph.facebook.com/v2.6/me/messages',
-        qs: { access_token: FACEBOOK_ACCESS_TOKEN },
-        method: 'POST',
-        json: {
-            recipient: { id: senderId },
-            message: { attachment },
-        }
-    });
+const sendTextMessage = (senderId, response) => {
+    var request_body = {
+    "recipient": {
+      "id": senderId
+    },
+    "message": response
+  }
+
+  // Send the HTTP request to the Messenger Platform
+  request({
+    "uri": "https://graph.facebook.com/v2.6/me/messages",
+    "qs": { "access_token": FACEBOOK_ACCESS_TOKEN },
+    "method": "POST",
+    "json": request_body
+  }, (err, res, body) => {
+    if (!err) {
+      console.log('message sent!')
+    } else {
+      console.error("Unable to send message:" + err);
+    }
+  });
 };
 
 module.exports = (event) => {
@@ -25,7 +36,6 @@ module.exports = (event) => {
 
     apiaiSession.on('response', (response) => {
         var aiText = response.result.fulfillment.speech;
-        console.log(aiText);
         if (response.result.metadata.intentName === 'players') {
             sendTextMessage(senderId, "You are asking for player info?");
         } else {
