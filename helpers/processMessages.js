@@ -5,14 +5,14 @@ const request = require('request');
 
 const apiAiClient = require('apiai')(API_AI_TOKEN);
 
-const sendTextMessage = (senderId, text) => {
+const sendTextMessage = (senderId, res) => {
     request({
         url: 'https://graph.facebook.com/v2.6/me/messages',
         qs: { access_token: FACEBOOK_ACCESS_TOKEN },
         method: 'POST',
         json: {
             recipient: { id: senderId },
-            message: { text },
+            message: { res },
         }
     });
 };
@@ -27,7 +27,7 @@ module.exports = (event) => {
         if (response.result.metadata.intentName === 'players') {
             sendTextMessage(senderId, "You are asking for player info?");
         } else {
-            sendTextMessage(senderId, "nothing");
+            sendTextMessage(senderId, response.result.fulfillment.speech);
         }
     });
 
