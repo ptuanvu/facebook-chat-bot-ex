@@ -5,7 +5,7 @@ const request = require('request');
 
 const apiAiClient = require('apiai')(API_AI_TOKEN);
 
-const sendTextMessage = (senderId, response) => {
+const callApiSendMessage = (senderId, response) => {
     console.log(response);
     var request_body = {
     "recipient": {
@@ -38,9 +38,9 @@ module.exports = (event) => {
     apiaiSession.on('response', (response) => {
         var aiText = response.result.fulfillment.speech;
         if (response.result.metadata.intentName === 'players') {
-            sendTextMessage(senderId, "You are asking for player info?");
+            callApiSendMessage(senderId, "You are asking for player info?");
         } else {
-            sendTextMessage(senderId, aiText);
+            callApiSendMessage(senderId, "nothing");
         }
     });
 
