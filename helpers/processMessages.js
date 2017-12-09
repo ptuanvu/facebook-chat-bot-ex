@@ -40,7 +40,7 @@ module.exports = (event) => {
         if (response.result.metadata.intentName === 'players') {
             callApiSendMessage(senderId, "You are asking for player info?");
         } else {
-            callApiSendMessage(senderId, "nothing");
+            callApiSendMessage(senderId, aiText);
         }
     });
 
