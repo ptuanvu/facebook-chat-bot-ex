@@ -57,25 +57,25 @@ const searchForResult = (senderId, message) => {
     if (hits.length > 5) { callApiSendMessage(senderId, 'So many matches! I can not display all of them.'); return; }
     if (hits.length > 1) {
       const buttons = hits.map((hit) => ({
-        "type": "postback",
-        "title": hit.name,
-        "playload": hit.id
+        type: 'postback',
+        title: hit.name,
+        playload: hit.id
       }));
       const response = {
-        "attachment": {
-          "type": "template",
-          "payload": {
-            "template_type": "generic",
-            "elements": [{
-              "title": "Which one you want to know?",
-              "subtitle": "Tap a button to answer.",
-              "buttons": buttons,
+        attachment: {
+          type: 'template',
+          payload: {
+            template_type: 'generic',
+            elements: [{
+              title: 'Which one you want to know?',
+              subtitle: 'Tap a button to answer.',
+              buttons: buttons
             }]
           }
         }
       };
 
-      callSendAPI(senderId, response);
+      callSendAPI(senderId, JSON.stringify(response));
       return;
     }
     const onlyOne = hits[0];
