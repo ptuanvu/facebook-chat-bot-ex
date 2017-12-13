@@ -54,9 +54,11 @@ export const searchForResult = (senderId, message) => {
   .then((hits) => {
     // TODO: Search for team?
     if (!hits || hits.length === 0) { sendTheMenu(senderId); return; }
-    if (hits.length > 3) { callApiSendMessage(senderId, 'So many matches! I can not display all of them.'); return; }
     if (hits.length > 1) {
-      const buttons = hits.map((hit) => ({
+      if (hits.length > 3) { callApiSendMessage(senderId, 'So many matches! I can not display all of them.'); }
+      const buttons = hits
+      .filter((hit, index) => index < 3)
+      .map((hit) => ({
         type: 'postback',
         title: hit.name,
         payload: 'user_hit_button_player'
