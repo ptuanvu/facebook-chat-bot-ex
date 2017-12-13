@@ -59,7 +59,7 @@ const searchForResult = (senderId, message) => {
       const buttons = hits.map((hit) => ({
         type: 'postback',
         title: hit.name,
-        payload: hit.id
+        payload: 'user_hit_button_player'
       }));
       const response = {
         attachment: {

@@ -4,13 +4,16 @@ import { callSendAPI } from './sendAPI';
 function handlePostback(sender_psid, received_postback) {
   let response;
   let payload = received_postback.payload;
-
+  console.log('received_postback__', received_postback);
   switch (payload) {
     case 'team_information':
-      response = { "text": "Give me a player name!" }
+      response = { "text": "We are not support this now!" }
       break;
     case 'player_information':
-      response = { "text": "Give me a team name!" }
+      response = { "text": "Give me a player name!" }
+      break;
+    case 'user_hit_button_player':
+      response = { "text": "I'm Vinh!" }
       break;
     default:
       response = { "text": "I'm Vinh! Gâu gâu! Please select your answer again" }
