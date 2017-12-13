@@ -54,7 +54,7 @@ const searchForResult = (senderId, message) => {
   .then((hits) => {
     // TODO: Search for team?
     if (!hits || hits.length === 0) { sendTheMenu(senderId); return; }
-    if (hits.length > 5) { callApiSendMessage(senderId, 'So many matches! I can not display all of them.'); }
+    if (hits.length > 5) { callApiSendMessage(senderId, 'So many matches! I can not display all of them.'); return; }
     if (hits.length > 1) {
       const buttons = hits.map((hit) => ({
         "type": "postback",
@@ -76,6 +76,7 @@ const searchForResult = (senderId, message) => {
       };
 
       callSendAPI(senderId, response);
+      return;
     }
     const onlyOne = hits[0];
     const message = `
