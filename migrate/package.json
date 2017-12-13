@@ -1,0 +1,32 @@
+{
+  "name": "migrate",
+  "version": "1.0.0",
+  "description": "",
+  "main": "migrate-firebase.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-cli": "^6.23.0",
+    "babel-eslint": "*",
+    "babel-polyfill": "*",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "babel-register": "*",
+    "chai": "^3.5.0",
+    "eslint": "^4.10.0",
+    "eslint-config-airbnb": "*",
+    "mocha": "*",
+    "nodemon": "*",
+    "supertest": "*",
+    "supertest-as-promised": "*"
+  },
+  "dependencies": {
+    "firebase": "^4.8.0",
+    "request": "^2.83.0",
+    "uuid": "^3.1.0",
+    "winston": "^2.1.1"
+  }
+}
