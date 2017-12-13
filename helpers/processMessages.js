@@ -38,22 +38,58 @@ const callApiSendMessage = (senderId, text) => {
         });
 };
 
+function sendTheMenu(senderId) {
+  let response = {
+    "attachment": {
+      "type": "template",
+      "payload": {
+        "template_type": "generic",
+        "elements": [{
+          "title": "Which one you want to know?",
+          "subtitle": "Tap a button to answer.",
+          "buttons": [
+            {
+              "type": "postback",
+              "title": "Football Teams",
+              "payload": "team_information",
+            },
+            {
+              "type": "postback",
+              "title": "Football Players",
+              "payload": "player_information",
+            }
+          ],
+        }]
+      }
+    }
+  };
+  callApiSendMessage(senderId, response);
+}
+
 module.exports = (event) => {
     const senderId = event.sender.id;
     const message = event.message.text;
+    switch (message) {
+      case 'team_information':
+        callApiSendMessage(senderId, "Give me a player name?");
+        break;
+      case 'player_information':
+        callApiSendMessage(senderId, "Give me a team name?");
+        break;
+      default:
+        const apiaiSession = apiAiClient.textRequest(message, {sessionId: 'facebook-chat-bot-ex'});
 
-    const apiaiSession = apiAiClient.textRequest(message, {sessionId: 'facebook-chat-bot-ex'});
+        apiaiSession.on('response', (response) => {
+            console.log(response);
+            var aiText = response.result.fulfillment.speech;
+            if (response.result.metadata.intentName === 'players') {
+                sendTheMenu(senderId);
+            } else {
+                callApiSendMessage(senderId, aiText);
+            }
+        });
 
-    apiaiSession.on('response', (response) => {
-        console.log(response);
-        var aiText = response.result.fulfillment.speech;
-        if (response.result.metadata.intentName === 'players') {
-            callApiSendMessage(senderId, "You are asking for player info?");
-        } else {
-            callApiSendMessage(senderId, aiText);
-        }
-    });
-
-    apiaiSession.on('error', error => console.log(error));
-    apiaiSession.end();
+        apiaiSession.on('error', error => console.log(error));
+        apiaiSession.end();
+    }
 };
