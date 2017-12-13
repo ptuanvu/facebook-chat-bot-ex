@@ -1,4 +1,5 @@
 import { callSendAPI } from './sendAPI';
+import { searchForResult } from './processMessages';
 
 // Handles messaging_postbacks events
 function handlePostback(sender_psid, received_postback) {
@@ -13,8 +14,7 @@ function handlePostback(sender_psid, received_postback) {
       response = { "text": "Give me a player name!" }
       break;
     case 'user_hit_button_player':
-      response = { "text": "I'm Vinh!" }
-      break;
+      return searchForResult(sender_psid, received_postback.title);
     default:
       response = { "text": "I'm Vinh! Gâu gâu! Please select your answer again" }
   }

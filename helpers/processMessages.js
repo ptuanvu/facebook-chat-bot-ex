@@ -49,7 +49,7 @@ const requestToAI_API = (senderId, message) => {
   apiaiSession.end();
 }
 
-const searchForResult = (senderId, message) => {
+export const searchForResult = (senderId, message) => {
   searchPlayerName(message)
   .then((hits) => {
     // TODO: Search for team?
