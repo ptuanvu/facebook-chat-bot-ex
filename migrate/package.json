@@ -24,6 +24,7 @@
     "supertest-as-promised": "*"
   },
   "dependencies": {
+    "algoliasearch": "^3.24.8",
     "firebase": "^4.8.0",
     "request": "^2.83.0",
     "uuid": "^3.1.0",

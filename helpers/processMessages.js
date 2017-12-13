@@ -1,5 +1,6 @@
 import { API_AI_TOKEN, FACEBOOK_ACCESS_TOKEN } from '../config';
 import { callSendAPI, callApiSendMessage } from './sendAPI';
+import { searchPlayerName } from '../api/algolia';
 
 const request = require('request');
 const apiAiClient = require('apiai')(API_AI_TOKEN);
@@ -48,8 +49,28 @@ const requestToAI_API = (senderId, message) => {
   apiaiSession.end();
 }
 
+const searchForResult = (senderId, message) => {
+  searchPlayerName(message)
+  .then((hits) => {
+    // TODO: Search for team?
+    if (!hits || hits.length === 0) { sendTheMenu(senderId); return; }
+    // TODO: Many players will display as a list of buttons
+    const onlyOne = hits[0];
+    const message = `
+      Player name: ${ onlyOne.name },
+      Jersey number: ${ onlyOne.jerseyNumber },
+      Birthday: ${ onlyOne.dateOfBirth },
+      National: ${ onlyOne.nationality },
+      Position: ${ onlyOne.position }`;
+    callApiSendMessage(senderId, message);
+  })
+  .catch((err) => {
+    console.error(err);
+  });
+}
+
 export function handleMessages(event) {
   const senderId = event.sender.id;
   const message = event.message.text;
-  requestToAI_API(senderId, message);
+  searchForResult(senderId, message);
 };
