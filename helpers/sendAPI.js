@@ -1,4 +1,5 @@
 import { PAGE_ACCESS_TOKEN } from '../config';
+const request = require('request');
 
 export function callSendAPI(sender_psid, response) {
   // Construct the message body
