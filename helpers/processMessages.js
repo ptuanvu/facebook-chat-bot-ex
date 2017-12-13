@@ -54,7 +54,29 @@ const searchForResult = (senderId, message) => {
   .then((hits) => {
     // TODO: Search for team?
     if (!hits || hits.length === 0) { sendTheMenu(senderId); return; }
-    // TODO: Many players will display as a list of buttons
+    if (hits.length > 5) { callApiSendMessage(senderId, 'So many matches! I can not display all of them.'); }
+    if (hits.length > 1) {
+      const buttons = hits.map((hit) => ({
+        "type": "postback",
+        "title": hit.name,
+        "playload": hit.id
+      }));
+      const response = {
+        "attachment": {
+          "type": "template",
+          "payload": {
+            "template_type": "generic",
+            "elements": [{
+              "title": "Which one you want to know?",
+              "subtitle": "Tap a button to answer.",
+              "buttons": buttons,
+            }]
+          }
+        }
+      };
+
+      callSendAPI(senderId, response);
+    }
     const onlyOne = hits[0];
     const message = `
       Player name: ${ onlyOne.name },
