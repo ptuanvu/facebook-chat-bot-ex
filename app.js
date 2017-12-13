@@ -19,7 +19,6 @@ app.get('/',(req,res) => {
 app.post('/webhook', (req, res) => {
 
   // Parse the request body from the POST
-  console.log('body_', body);
   let body = req.body;
 
   // Check the webhook event is from a Page subscription

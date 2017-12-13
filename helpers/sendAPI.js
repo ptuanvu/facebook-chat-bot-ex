@@ -23,3 +23,15 @@ export function callSendAPI(sender_psid, response) {
     }
   });
 }
+
+export const callApiSendMessage = (senderId, text) => {
+  request({
+    url: 'https://graph.facebook.com/v2.6/me/messages',
+    qs: { access_token: FACEBOOK_ACCESS_TOKEN },
+    method: 'POST',
+    json: {
+      recipient: { id: senderId },
+      message: { text },
+    }
+  });
+};
