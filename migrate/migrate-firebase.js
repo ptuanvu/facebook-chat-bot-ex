@@ -16,8 +16,8 @@ var database = firebase.database();
 
 const header = { 'X-Auth-Token': '8f5e26f29ec6417796b33a7713c725ba' }
 const MAX_TEAM_NUMBER = 110;
-let INTERVAL_NUMBER_1 = 110;
-let INTERVAL_NUMBER_2 = 110;
+let INTERVAL_NUMBER_1 = 0;
+let INTERVAL_NUMBER_2 = 0;
 let DOING1 = false;
 let DOING2 = false;
 let FLAG_API_MAX_REQUEST = false;
