@@ -27,7 +27,7 @@ Players.buildPreviewElement = (player) => {
 
 Players.sendPlayersInfomation = (senderId, players) => {
     const elements = players
-    .filter((player, index) => index < 3)
+    .filter((player, index) => index < 5)
     .map(player => Players.buildPreviewElement(player));
 
     const payload = {
@@ -49,7 +49,7 @@ Players.findPlayersByName = (senderId, message) => {
   .then((hits) => {
     if (!hits || hits.length === 0) { sendTheMenu(senderId); return; }
 
-    if (hits.length > 3) { callApiSendMessage(senderId, 'So many matches! I can not display all of them.'); }
+    if (hits.length > 5) { callApiSendMessage(senderId, 'So many matches! I can not display all of them.'); }
     Players.sendPlayersInfomation(senderId, hits);
   })
   .catch((err) => {
