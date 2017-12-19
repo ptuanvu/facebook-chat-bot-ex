@@ -7,6 +7,7 @@ const
 import { VERIFY_TOKEN } from './config';
 import { handlePostback } from './helpers/processPostback';
 import { handleMessages } from './helpers/processMessages';
+import './api/firebase.js';
 
 // Sets server port and logs message on success
 app.listen(process.env.PORT || 1337, () => console.log('webhook is listening'));
