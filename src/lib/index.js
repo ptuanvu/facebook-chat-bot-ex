@@ -4,4 +4,4 @@ import Variables from './variables';
 import Utils from './utils';
 import RecastAI from './recastai';
 
-export { Players, Users, Variables, Utils };
+export { Players, Users, Variables, Utils, RecastAI };
