@@ -1,16 +1,22 @@
 import { callSendAPI } from './sendAPI';
-import { Players } from '../lib';
+import { Players, Users, Variables } from '../lib';
 
 // Handles messaging_postbacks events
 function handlePostback(sender_psid, received_postback) {
   let response;
-  let payload = received_postback.payload;
+  const payload = received_postback.payload;
   switch (payload) {
-    case 'team_information':
-      response = { "text": "We are not support this now!" }
+    case Variables.SEARCH_TEAM_INFO:
+      Users.setVariable(sender_psid, Variables.USER_SEARCH_TYPE, Variables.SEARCH_TEAM_INFO);
+      response = { "text": "Give me a team name!" }
       break;
-    case 'player_information':
+    case Variables.SEARCH_PLAYER_INFO:
+      Users.setVariable(sender_psid, Variables.USER_SEARCH_TYPE, Variables.SEARCH_PLAYER_INFO);
       response = { "text": "Give me a player name!" }
+      break;
+    case Variables.CHAT_WITH_ME:
+      Users.setVariable(sender_psid, Variables.USER_SEARCH_TYPE, Variables.CHAT_WITH_ME);
+      response = { "text": "Hello! :D" }
       break;
     default:
       // Handle postback with params

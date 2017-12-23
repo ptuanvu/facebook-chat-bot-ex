@@ -1,7 +1,7 @@
 import { callSendAPI, callApiSendMessage } from '../helpers/sendAPI';
-import { sendTheMenu } from './utils';
 import { searchPlayerName } from '../api/algolia';
 import Firebase from '../api/firebase';
+import Utils from './utils';
 
 const Players = {};
 
@@ -27,7 +27,7 @@ Players.buildPreviewElement = (player) => {
 
 Players.sendPlayersInfomation = (senderId, players) => {
     const elements = players
-    .filter((player, index) => index < 3)
+    .filter((player, index) => index < 5)
     .map(player => Players.buildPreviewElement(player));
 
     const payload = {
@@ -47,9 +47,12 @@ Players.sendPlayersInfomation = (senderId, players) => {
 Players.findPlayersByName = (senderId, message) => {
   searchPlayerName(message)
   .then((hits) => {
-    if (!hits || hits.length === 0) { sendTheMenu(senderId); return; }
+    if (!hits || hits.length === 0) {
+      callApiSendMessage(senderId, 'No matches bitch! Please give me a right player name!');
+      return Utils.sendTheMenu(senderId);
+    }
 
-    if (hits.length > 3) { callApiSendMessage(senderId, 'So many matches! I can not display all of them.'); }
+    if (hits.length > 5) { callApiSendMessage(senderId, 'So many matches! I can not display all of them.'); }
     Players.sendPlayersInfomation(senderId, hits);
   })
   .catch((err) => {
