@@ -22,9 +22,8 @@ export function handleMessages(event) {
     } else if (cache.value === Variables.CHAT_WITH_ME) {
       RecastAI.sendMessage(message)
       .then((res) => {
-        var reply = res.reply();
-        console.log('RecastAI__', reply);
-        callApiSendMessage(senderId, reply);
+        console.log('RecastAI__', res);
+        callApiSendMessage(senderId, res.messages[0].content);
       })
       .catch((err) => console.error('RecastAI_Error__', err));
     } else {
