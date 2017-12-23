@@ -1,6 +1,6 @@
 import { API_AI_TOKEN, FACEBOOK_ACCESS_TOKEN } from '../config';
 import { callSendAPI, callApiSendMessage } from './sendAPI';
-import { Players, Users, Utils, Variables } from '../lib';
+import { Players, Users, Utils, Variables, RecastAI } from '../lib';
 
 export function handleMessages(event) {
   const senderId = event.sender.id;
@@ -20,6 +20,9 @@ export function handleMessages(event) {
     } else if (cache.value === Variables.SEARCH_PLAYER_INFO) {
       Players.findPlayersByName(senderId, message);
     } else if (cache.value === Variables.CHAT_WITH_ME) {
+      RecastAI.sendMessage(message)
+      .then((res) => console.log('RecastAI__', res))
+      .catch((err) => console.error('RecastAI_Error__', err));
       callApiSendMessage(senderId, 'My stupid parents do not teach me any thing about chating! Say fuck with Mr Vinh and Mr A.Tuan');
     } else {
       Utils.sendTheMenu(senderId);
