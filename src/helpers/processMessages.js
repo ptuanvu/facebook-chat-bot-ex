@@ -21,9 +21,11 @@ export function handleMessages(event) {
       Players.findPlayersByName(senderId, message);
     } else if (cache.value === Variables.CHAT_WITH_ME) {
       RecastAI.sendMessage(message)
-      .then((res) => console.log('RecastAI__', res))
+      .then((res) => {
+        console.log('RecastAI__', res);
+        callApiSendMessage(senderId, res.reply());
+      })
       .catch((err) => console.error('RecastAI_Error__', err));
-      callApiSendMessage(senderId, 'My stupid parents do not teach me any thing about chating! Say fuck with Mr Vinh and Mr A.Tuan');
     } else {
       Utils.sendTheMenu(senderId);
     }
